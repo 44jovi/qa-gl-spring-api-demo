@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,7 +41,7 @@ public class CatController {
 	}
 
 	@GetMapping("/get/{id}")
-	// if variable names don't match, you'd have to add it after @PathVariable
+	// If variable names don't match, you'd have to add it after @PathVariable
 	public Cat get(@PathVariable int id) {
 		return this.cats.get(id);
 	}
