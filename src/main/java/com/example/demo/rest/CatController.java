@@ -3,6 +3,7 @@ package com.example.demo.rest;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,9 +36,12 @@ public class CatController {
 	
 	@GetMapping("/get/{id}")
 	// if variable names don't match, you'd have to add it after @PathVariable
-	public Cat get(@PathVariable int id) {
-		
-		return this.cats.get(id);
-		 
+	public Cat get(@PathVariable int id) {		
+		return this.cats.get(id);		 
+	}
+	
+	@DeleteMapping("/remove/{id}")
+	public Cat delete(@PathVariable int id) {		
+		return this.cats.remove(id);
 	}
 }
