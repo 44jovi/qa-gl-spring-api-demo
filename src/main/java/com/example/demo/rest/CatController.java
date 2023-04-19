@@ -15,41 +15,44 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.domain.Cat;
+import com.example.demo.service.CatService;
 
 @RestController
 public class CatController {
+	
+	// Data type is CatService, so any service that implements it can be used
+	private CatService service;
+		
+	public CatController(CatService service) {
+		super();
+		this.service = service;
+	}
 
 	@GetMapping("/")
 	public String greeting() {
 		return "Howdy, world!";
 	}
 
-	List<Cat> cats = new ArrayList<>();
-
 	@PostMapping("/create")
-	public ResponseEntity<Cat> createCat(@RequestBody Cat c) {		
-		this.cats.add(c);
-		
-		Cat created = this.cats.get(cats.size() - 1);
+	public ResponseEntity<Cat> createCat(@RequestBody Cat c) {			
+		Cat created = this.service.createCat(c);
 		
 		return new ResponseEntity<>(created, HttpStatus.CREATED);
 	}
 
 	@GetMapping("/getAll")
 	public List<Cat> getAll() {
-		return this.cats;
+		return this.service.getAll();
 	}
 
 	@GetMapping("/get/{id}")
-	// If variable names don't match, you'd have to add it after @PathVariable
 	public Cat get(@PathVariable int id) {
-		return this.cats.get(id);
+		return this.service.get(id);		
 	}
 
 	@DeleteMapping("/remove/{id}")
 	public Cat delete(@PathVariable int id) {
-		// Could also pass in the object, but would return boolean
-		return this.cats.remove(id);
+		return this.service.delete(id);
 	}
 
 	@PatchMapping("/update/{id}")
@@ -59,13 +62,6 @@ public class CatController {
 			@RequestParam(name = "evil", required = false) Boolean evil,
 			@RequestParam(name = "length", required = false) Integer length) {
 		
-		Cat c = cats.get(id);
-		
-		if (hasWhiskers != null) c.setHasWhiskers(hasWhiskers);
-		if (name != null) c.setName(name);
-		if (evil != null) c.setEvil(evil);
-		if (length != null) c.setLength(length);
-		
-		return c;
+		return this.service.update(id, hasWhiskers, name, evil, length);
 	}
 }
