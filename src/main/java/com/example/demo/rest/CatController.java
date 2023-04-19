@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.domain.Cat;
@@ -18,9 +20,10 @@ public class CatController {
 	
 	List <Cat> cats = new ArrayList<>();
 	
-	public Cat createCat(Cat c) {
+	@PostMapping("/create")
+	public Cat createCat(@RequestBody Cat c) {
 		this.cats.add(c);
 		
-		return this.cats.get(cats.size() -1);	
+		return this.cats.get(cats.size() -1);	 
 	}
 }
