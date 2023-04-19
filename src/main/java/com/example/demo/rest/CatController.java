@@ -41,7 +41,8 @@ public class CatController {
 	}
 	
 	@DeleteMapping("/remove/{id}")
-	public Cat delete(@PathVariable int id) {		
+	public Cat delete(@PathVariable int id) {	
+		// Could also pass in the object, but would return boolean
 		return this.cats.remove(id);
 	}
 }
