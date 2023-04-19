@@ -3,6 +3,9 @@ package com.example.demo.rest;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -25,10 +28,12 @@ public class CatController {
 	List<Cat> cats = new ArrayList<>();
 
 	@PostMapping("/create")
-	public Cat createCat(@RequestBody Cat c) {
+	public ResponseEntity<Cat> createCat(@RequestBody Cat c) {		
 		this.cats.add(c);
-
-		return this.cats.get(cats.size() - 1);
+		
+		Cat created = this.cats.get(cats.size() - 1);
+		
+		return new ResponseEntity<>(created, HttpStatus.CREATED);
 	}
 
 	@GetMapping("/getAll")
