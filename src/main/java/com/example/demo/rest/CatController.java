@@ -26,4 +26,9 @@ public class CatController {
 		
 		return this.cats.get(cats.size() -1);	 
 	}
+	
+	@GetMapping("/getAll")
+	public List<Cat> getAll() {
+		return this.cats;
+	}
 }
