@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultMatcher;
@@ -36,13 +37,15 @@ public class CatIntegrationTest {
 		Cat newCat = new Cat(true, "lexi", true, 44);
 		// writeValueAsString throws exception, so the method needs "throws Exception"
 		String newCatAsJson = this.mapper.writeValueAsString(newCat);
-		RequestBuilder req = MockMvcRequestBuilders.post("/create").content(newCatAsJson);
+		RequestBuilder req = MockMvcRequestBuilders.post("/create").content(newCatAsJson).contentType(MediaType.APPLICATION_JSON);
 
 		// Short form way, see imports
 		ResultMatcher checkStatus = status().isCreated();
 		Cat created = new Cat(1L, true, "lexi", true, 44);
 		String createdAsJson = this.mapper.writeValueAsString(created);
 		ResultMatcher checkBody = content().json(createdAsJson);
+
+		this.mvc.perform(req).andExpect(checkStatus).andExpect(checkBody);
 
 	}
 
