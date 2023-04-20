@@ -86,7 +86,7 @@ public class CatIntegrationTest {
 
 		this.mvc.perform(req).andExpect(checkStatus).andExpect(checkBody);
 	}
-	
+
 	@Test
 	void testRemoveById() throws Exception {
 		RequestBuilder req = MockMvcRequestBuilders.delete("/remove/1");
@@ -100,7 +100,17 @@ public class CatIntegrationTest {
 		this.mvc.perform(req).andExpect(checkStatus).andExpect(checkBody);
 	}
 
+	@Test
+	void testUpdateById() throws Exception {
 
-	
-	
+		RequestBuilder req = MockMvcRequestBuilders.patch("/update/1").queryParam("name", "my name changed");
+
+		ResultMatcher checkStatus = status().isOk();
+
+		Cat updated = new Cat(1L, false, "my name changed", false, 99);
+		String updatedAsJson = this.mapper.writeValueAsString(updated);
+		ResultMatcher checkBody = content().json(updatedAsJson);
+
+		this.mvc.perform(req).andExpect(checkStatus).andExpect(checkBody);
+	}
 }
