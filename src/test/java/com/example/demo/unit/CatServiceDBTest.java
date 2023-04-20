@@ -35,6 +35,13 @@ public class CatServiceDBTest {
 	}
 
 	@Test
+	void testGetById() {
+		Cat cat = new Cat(false, "simba", false, 99);
+		Mockito.when(this.repo.findById(1L)).thenReturn(Optional.of(cat));
+		Assertions.assertEquals(cat, this.service.get(1));
+	}
+
+	@Test
 	void testGetAll() {
 		Cat cat = new Cat(false, "simba", false, 99);
 		List<Cat> existingCats = new ArrayList<>();
@@ -43,6 +50,11 @@ public class CatServiceDBTest {
 		Mockito.when(this.repo.findAll()).thenReturn(existingCats);
 
 		Assertions.assertEquals(existingCats, this.service.getAll());
+	}
+
+	@Test
+	void deleteById() {
+		//TODO: WIP
 	}
 
 	@Test
