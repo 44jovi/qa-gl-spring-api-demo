@@ -1,7 +1,11 @@
 package com.example.demo.integration;
 
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +27,7 @@ import com.example.demo.domain.Cat;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 // Script here is an array.
-@Sql(scripts = {"classpath:cat-schema.sql", "classpath:cat-data.sql"})
+@Sql(scripts = { "classpath:cat-schema.sql", "classpath:cat-data.sql" })
 public class CatIntegrationTest {
 
 	// Test classes don't typically use constructors therefore:
@@ -48,6 +52,24 @@ public class CatIntegrationTest {
 		Cat created = new Cat(2L, true, "lexi", true, 44);
 		String createdAsJson = this.mapper.writeValueAsString(created);
 		ResultMatcher checkBody = content().json(createdAsJson);
+
+		this.mvc.perform(req).andExpect(checkStatus).andExpect(checkBody);
+
+	}
+
+	@Test
+	void testGetAll() throws Exception {
+		RequestBuilder req = MockMvcRequestBuilders.get("/getAll");
+
+		ResultMatcher checkStatus = status().isOk();
+
+		Cat cat = new Cat(1L, false, "simba", false, 99);
+
+		List<Cat> list = new ArrayList<>();
+		list.add(cat);
+
+		String listAsJson = this.mapper.writeValueAsString(list);
+		ResultMatcher checkBody = content().json(listAsJson);
 
 		this.mvc.perform(req).andExpect(checkStatus).andExpect(checkBody);
 
