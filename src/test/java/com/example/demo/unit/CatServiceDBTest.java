@@ -26,6 +26,13 @@ public class CatServiceDBTest {
 	private CatRepo repo;
 
 	@Test
+	void testCreateCat() {
+		Cat cat = new Cat(false, "blah", false, 88);
+		Mockito.when(this.repo.save(Mockito.any())).thenReturn(cat);
+		Assertions.assertEquals(cat, this.service.createCat(cat));
+	}
+
+	@Test
 	void testUpdate() {
 		long id = 1L;
 		Cat existing = new Cat(id, false, "blah", false, 88);
