@@ -45,7 +45,7 @@ public class CatIntegrationTest {
 
 		// Short form way, see imports
 		ResultMatcher checkStatus = status().isCreated();
-		Cat created = new Cat(1L, true, "lexi", true, 44);
+		Cat created = new Cat(2L, true, "lexi", true, 44);
 		String createdAsJson = this.mapper.writeValueAsString(created);
 		ResultMatcher checkBody = content().json(createdAsJson);
 
