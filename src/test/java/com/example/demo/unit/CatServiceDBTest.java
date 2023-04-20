@@ -54,7 +54,11 @@ public class CatServiceDBTest {
 
 	@Test
 	void deleteById() {
-		//TODO: WIP
+		Cat cat = new Cat(false, "simba", false, 99);
+		
+		// Can't use .deleteByID as it's a void method that Mockito can't use
+		Mockito.when(this.repo.findById(1L)).thenReturn(Optional.of(cat));
+		Assertions.assertEquals(cat, this.service.delete(1));
 	}
 
 	@Test
