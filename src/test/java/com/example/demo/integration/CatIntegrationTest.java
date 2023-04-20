@@ -72,7 +72,19 @@ public class CatIntegrationTest {
 		ResultMatcher checkBody = content().json(listAsJson);
 
 		this.mvc.perform(req).andExpect(checkStatus).andExpect(checkBody);
+	}
 
+	@Test
+	void testGetById() throws Exception {
+		RequestBuilder req = MockMvcRequestBuilders.get("/get/1");
+
+		ResultMatcher checkStatus = status().isOk();
+
+		Cat cat = new Cat(1L, false, "simba", false, 99);
+		String catAsJson = this.mapper.writeValueAsString(cat);
+		ResultMatcher checkBody = content().json(catAsJson);
+
+		this.mvc.perform(req).andExpect(checkStatus).andExpect(checkBody);
 	}
 
 }
