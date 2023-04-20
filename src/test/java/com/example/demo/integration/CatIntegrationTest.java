@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultMatcher;
@@ -21,6 +22,8 @@ import com.example.demo.domain.Cat;
 // This annotation will actually run your app
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
+// Script here is an array.
+@Sql(scripts = {"classpath:cat-schema.sql", "classpath:cat-data.sql"})
 public class CatIntegrationTest {
 
 	// Test classes don't typically use constructors therefore:
@@ -37,7 +40,8 @@ public class CatIntegrationTest {
 		Cat newCat = new Cat(true, "lexi", true, 44);
 		// writeValueAsString throws exception, so the method needs "throws Exception"
 		String newCatAsJson = this.mapper.writeValueAsString(newCat);
-		RequestBuilder req = MockMvcRequestBuilders.post("/create").content(newCatAsJson).contentType(MediaType.APPLICATION_JSON);
+		RequestBuilder req = MockMvcRequestBuilders.post("/create").content(newCatAsJson)
+				.contentType(MediaType.APPLICATION_JSON);
 
 		// Short form way, see imports
 		ResultMatcher checkStatus = status().isCreated();
