@@ -2,6 +2,7 @@ package com.example.demo.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 // Tell Spring this is a table
@@ -10,7 +11,7 @@ import jakarta.persistence.Id;
 public class Cat {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	boolean hasWhiskers;
 	String name;	
