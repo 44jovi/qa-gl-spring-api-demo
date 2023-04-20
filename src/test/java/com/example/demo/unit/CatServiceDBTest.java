@@ -1,5 +1,7 @@
 package com.example.demo.unit;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
@@ -30,6 +32,17 @@ public class CatServiceDBTest {
 		Cat cat = new Cat(false, "blah", false, 88);
 		Mockito.when(this.repo.save(Mockito.any())).thenReturn(cat);
 		Assertions.assertEquals(cat, this.service.createCat(cat));
+	}
+
+	@Test
+	void testGetAll() {
+		Cat cat = new Cat(false, "simba", false, 99);
+		List<Cat> existingCats = new ArrayList<>();
+		existingCats.add(cat);
+
+		Mockito.when(this.repo.findAll()).thenReturn(existingCats);
+
+		Assertions.assertEquals(existingCats, this.service.getAll());
 	}
 
 	@Test
