@@ -51,5 +51,27 @@ public class SeleniumDemo {
 				"#main-content > div.ssrcss-1v7bxtk-StyledContainer.enjd40x0 > div > div > ul > li:nth-child(1) > div > div > div.ssrcss-tq7xfh-PromoContent.e1f5wbog8 > div.ssrcss-1f3bvyz-Stack.e1y4nx260 > a"));
 		assertEquals("The Turtle Dove Pilgrimage", result.getText());
 	}
+	
+	@Test
+	void penguinTest() throws InterruptedException {
+		// search Bing for penguin
+		// {Thread.sleep(3000); }
+		// check first result
+		
+		this.driver.get("https://www.bing.com/");
+		
+		// Wait for 3 seconds
+		Thread.sleep(3000);
+		WebElement search = this.driver.findElement(By.cssSelector("#sb_form_q"));
+		search.sendKeys("penguin");
+		search.sendKeys(Keys.ENTER);
+		Thread.sleep(3000);
+
+		WebElement result = this.driver.findElement(By.cssSelector("#b_results > li.b_algo.b_vtl_deeplinks > div.b_title > h2 > a"));
+		
+		assertEquals("Penguin Books UK | Official Website",  result.getText());
+		
+		
+	}
 
 }
