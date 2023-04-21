@@ -54,10 +54,6 @@ public class SeleniumDemo {
 	
 	@Test
 	void penguinTest() throws InterruptedException {
-		// search Bing for penguin
-		// {Thread.sleep(3000); }
-		// check first result
-		
 		this.driver.get("https://www.bing.com/");
 		
 		// Wait for 3 seconds
