@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.domain.Cat;
 import com.example.demo.service.CatService;
 
+// Annotation for Spring MVC
+// Includes @Controller and @ResponseBody
+// Used to create RESTful web services via HTTP requests
 @RestController
 public class CatController {
 	
-	// Data type is CatService, so any service that implements it can be used
+	// Data type of CatService (interface) 
 	private CatService service;
 		
 	public CatController(CatService service) {

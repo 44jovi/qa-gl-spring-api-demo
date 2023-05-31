@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.demo.domain.Cat;
 
+// Business logic
 public interface CatService {	
 
 	Cat createCat(Cat c);
